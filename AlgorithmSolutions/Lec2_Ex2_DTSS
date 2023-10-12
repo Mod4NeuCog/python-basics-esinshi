@@ -1,0 +1,33 @@
+Algorithm: Neuron as a DTSS
+Input: List inputSpikeList = [0, 5, 5, 0, 0, 0, 0, 5]
+Init
+    Float V_rest <- -75 mV
+    Float V_threshold ← −65 mV
+    Float V_membrane ← V_rest mV
+    Float c ← 0.5
+    Float t_end <- 3.5
+
+delta(input, V_membrane)
+    V_membrane <- V_membrane + input
+    return V_membrane
+
+lambda():
+    if V_membrane >= V_threshold then
+        spike = 1
+        V_membrane <- V_rest
+    else
+        spike = 0
+    return(spike)
+
+Simulate(inputSpikeList, t_end, c):
+    t<-0
+    n<-0
+
+    while t < t_end do
+        lambda(V_membrane)
+        V_membrane = delta(inputSpikeList[n], V_membrane)
+        n = n+1
+        t = n*c
+
+Main(argv):
+    Simulate(inputSpikeList, t_end, c)

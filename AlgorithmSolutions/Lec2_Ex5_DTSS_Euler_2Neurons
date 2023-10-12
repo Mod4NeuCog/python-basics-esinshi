@@ -1,0 +1,50 @@
+Consider a network of two interacting neurons, as functions
+Simulate a neuron from t=0 to t=0.35 using a for loop.
+Take inputs during this interval and determine if neuron has spiked.
+
+Algorithm: Neuron as a DTSS
+Input: List inputSpikeList = [0, 5, 5, 0, 0, 0, 0, 5]
+Init
+    Float V_rest <- -75 mV
+    Float V_threshold ← −65 mV
+    Float V_membrane ← V_rest mV
+    Float c ← 0.5
+    Float t_end = 3.5
+    Float R_m <- 5
+    Float tau_m <- 0.5 ms
+
+delta(input, V_membrane, dt)
+    V_membrane <- V_membrane + dt*[(V_rest - V_membrane + R_m * input)/(tau_m)]
+    return V_membrane
+
+lambda():
+    if V_membrane >= V_threshold then
+        spike <- 1
+        V_membrane <- V_rest
+    else
+        spike <- 0
+    return(spike)
+
+Simulate(inputSpikeList, t_end, c):
+    t<-0
+
+    for n <- 0 to (t_end/c) do
+        /* Store the output spike of Neuron1
+        Neuron1.output <- lambda(Neuron1.V_membrane)
+
+        /* Update membrane potential of Neuron1
+        Neuron1.V_membrane <- delta(inputSpikeList[n], Neuron1.V_membrane, c)
+
+        /* Store the output spike of Neuron2
+        Neuron2.output <- lambda(Neuron2.V_membrane)
+
+        /* Update membrane potential of Neuron2 using Neuron1 output as its input
+        Neuron2.V_membrane = delta(Neuron1.output, Neuron2.V_membrane, c)
+
+        print(Neuron1.output, Neuron2.output)
+
+        n <- n+1
+        t <- n*c
+
+Main(argv):
+    Simulate(inputSpikeList, t_end, c)
